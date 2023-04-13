@@ -5,12 +5,33 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from .forms import UserCreationForm, UserAuthenticationForm
+from .forms import UserCreationForm, UserAuthenticationForm, UploadFileForm
 
 # Create your views here.
-@login_required
 def home(request: HttpRequest) -> HttpResponse:
     return render(request, 'home.html', {})
+
+
+@login_required()
+def index(request: HttpRequest) -> HttpResponse:
+    form = UploadFileForm()
+    if request.method == "POST":
+        form = UploadFileForm(request.POST, request.FILES)
+        file_1 = request.FILES.get('file_1')
+        file_2 = request.FILES.get('file_2')
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.file_1 = file_1
+            instance.file_2 = file_2
+            instance.save()
+            messages.success(request, "File Uploaded")
+            return redirect("core:index")
+        else:
+            messages.error(request, "Upload failed")
+    context = {"form": form}
+    return render(request, "index.html", context)
+
 
 
 def register(request: HttpRequest) -> HttpResponse:
@@ -56,5 +77,5 @@ def login_view(request: HttpRequest) -> HttpResponse:
 def logout_view(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
-	return redirect("core:login")
+	return redirect("core:home")
 

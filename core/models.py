@@ -6,6 +6,8 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
+
+
 class UserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
@@ -52,3 +54,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class FileUploader(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    file_1=models.FileField(upload_to='upload/')
+    file_2=models.FileField(upload_to='upload/')
+
+    def __str__(self):
+        return self.user.email

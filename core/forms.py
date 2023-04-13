@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate
 
-from .models import User
+from .models import User, FileUploader
 
 class UserAuthenticationForm(forms.ModelForm):
     """
@@ -48,3 +48,11 @@ class UserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = ("email",)
+
+
+class UploadFileForm(forms.ModelForm):
+    # title = forms.CharField(max_length=50)
+    # file = forms.FileField()
+    class Meta:
+        model = FileUploader
+        fields = ('file_1', 'file_2',)
