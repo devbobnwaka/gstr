@@ -56,3 +56,7 @@ class UploadFileForm(forms.ModelForm):
     class Meta:
         model = FileUploader
         fields = ('file_1', 'file_2',)
+        widgets = {
+            'file_1': forms.widgets.FileInput(attrs={'accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}),
+            'file_2': forms.widgets.FileInput(attrs={'accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'})
+        }

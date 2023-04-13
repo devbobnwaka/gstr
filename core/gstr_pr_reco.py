@@ -10,6 +10,14 @@ import warnings
 import re
 from difflib import SequenceMatcher , get_close_matches
 
+from .CONSTANTS import * #added this line
+
+
+####ADDED THIS LINE OF CODE ##################
+if not os.path.exists('/upload'):
+    os.makedirs('/upload')
+############## END ########################
+
 warnings.filterwarnings('ignore')
 
 def getgstcheck(number):
@@ -252,7 +260,7 @@ def download(pth=os.getcwd()):
     import pandas as pd
     import numpy as np
     import openpyxl
-    from CONSTANTS import *
+    # from CONSTANTS import * #commented this
     
 
 
@@ -363,7 +371,7 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
     import numpy as np
     import openpyxl
 
-    from CONSTANTS import *
+    # from CONSTANTS import *   #commented this
 
 
     
@@ -376,18 +384,20 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
     print(f'The ITR file path is {files_itr}')
 
     pth = os.path.dirname(str(files_con2a))
-
+    
     fullpath1 = pth + "/" + EXPORT_SUMMARY_NAME
-
-    writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', options={'strings_to_formulas': True})
-    #
+    
+    # writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', options={'strings_to_formulas': True})
+    writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', engine_kwargs={'options': {'strings_to_formulas': True}})
+    
 
 
 
 
     fullpath1a = pth + "/" + EXPORT_SUMMARY_NAME
 
-    writer1 = pd.ExcelWriter(fullpath1a, engine='xlsxwriter', options={'strings_to_formulas': True})
+    # writer1 = pd.ExcelWriter(fullpath1a, engine='xlsxwriter', options={'strings_to_formulas': True})
+    writer1 = pd.ExcelWriter(fullpath1a, engine='xlsxwriter', engine_kwargs={'options': {'strings_to_formulas': True}})
 
     df1 = pd.DataFrame()
     df1.to_excel(writer1, sheet_name=EXPORT_SUMMARY_SHEET, index=False)

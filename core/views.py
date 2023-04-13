@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-# from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserCreationForm, UserAuthenticationForm, UploadFileForm
+from .gstr_pr_reco import reco_itr_2a
 
 # Create your views here.
 def home(request: HttpRequest) -> HttpResponse:
@@ -25,6 +25,9 @@ def index(request: HttpRequest) -> HttpResponse:
             instance.file_1 = file_1
             instance.file_2 = file_2
             instance.save()
+            print('hello', type(instance.file_1.url))
+            result = reco_itr_2a(instance.file_1.url, instance.file_2.url)
+            print(result)
             messages.success(request, "File Uploaded")
             return redirect("core:index")
         else:
