@@ -14,8 +14,8 @@ from .CONSTANTS import * #added this line
 
 
 ####ADDED THIS LINE OF CODE ##################
-if not os.path.exists('/upload'):
-    os.makedirs('/upload')
+# if not os.path.exists('/upload'):
+#     os.makedirs('/upload')
 ############## END ########################
 
 warnings.filterwarnings('ignore')
@@ -402,7 +402,8 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
     df1 = pd.DataFrame()
     df1.to_excel(writer1, sheet_name=EXPORT_SUMMARY_SHEET, index=False)
 
-    writer1.save()
+    # writer1.save()
+    writer1.close()
 
     fullpath2 = fullpath1a.replace("/", "\\")  # this is a very useful command for defining the correct filepath
 
