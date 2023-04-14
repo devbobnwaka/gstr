@@ -2,7 +2,8 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-<a href="/logout">Logout</a>
+<a href="/logout">Logout</a> ||
+<a href="/index/">GSTR</a>
 {% else %}
 <a href="/login/">Login</a> ||
 <a href="/register/">Register</a>
