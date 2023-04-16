@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -25,11 +27,13 @@ def index(request: HttpRequest) -> HttpResponse:
             instance.file_1 = file_1
             instance.file_2 = file_2
             instance.save()
-            print('hello', type(instance.file_1.url))
-            result = reco_itr_2a(instance.file_1.url, instance.file_2.url)
+            # print('hello', type(instance.file_1.url))
+            # print(os.path.join(settings.BASE_DIR, instance.file_1.name.replace("/", os.path.sep)))
+            # print(instance.file_1.path)
+            result = reco_itr_2a(instance.file_1.path, instance.file_2.path)
             print(result)
             messages.success(request, "File Uploaded")
-            return redirect("core:index")
+            # return redirect("core:index")
         else:
             messages.error(request, "Upload failed")
     context = {"form": form}

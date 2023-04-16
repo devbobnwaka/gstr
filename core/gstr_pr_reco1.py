@@ -497,10 +497,7 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
     gstr2a['PAN_INVDATE_2_WAY'] = gstr2a['PAN_Number'] + "/" + gstr2a["Inv_CN_DN_Date_Text"]
 
 
-    itr = pd.read_excel(files_itr, sheet_name=ITR_SHEET_NAME,dtype={PR_INVOICE_NUMBER:str, PR_INVOICE_DATE_TEXT:str,PR_TOTAL_TAX:object})
-
-    # itr = pd.read_excel(files_itr, sheet_name="Main_ITR_Format")
-
+    itr = pd.read_excel(files_itr, sheet_name=ITR_SHEET_NAME,dtype={PR_INVOICE_NUMBER:str, PR_INVOICE_DATE_TEXT:str,PR_TOTAL_TAX:float})
 
     try:
         itr["Invoice_Numberl"] = itr[PR_INVOICE_NUMBER].apply(lambda x: x.lower(str()))
@@ -597,6 +594,7 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
         
         gstr2a_work_1=gstr2a_work_1[mask_1]
 #         print(gstr2a_work_2)
+
 
         gstr2a_work=gstr2a_work_1     
         
@@ -1350,14 +1348,14 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
 
 
 
-    writer.close()
+    writer.save()
 
     print("Success! ")
 
 
 
-    wb.close(fullpath2)
-    writer.close()
+    wb.save(fullpath2)
+    writer.save()
 
     wb.close()
     writer.close()
