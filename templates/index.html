@@ -11,6 +11,15 @@
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">Upload</button>
-    </form>
+    </form><br/>
+    {% if is_upload %}
+    <a href="{% url 'core:reconcile' file_path_1 file_path_2 %}"><button>Reconcile</button></a>
+    {% else %}
+    <button>Reconcile</button>
+    {% endif %}
+
+    {% if is_file_path_ready %}
+        <a href="{% url 'core:download_file' is_file_path_ready %}">Download FILE</a>
+    {% endif %}
 </main>
 {% endblock content %}

@@ -385,7 +385,7 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
 
     pth = os.path.dirname(str(files_con2a))
     
-    fullpath1 = pth + "/" + EXPORT_WORKING_NAME
+    fullpath1 = pth + "/" + EXPORT_SUMMARY_NAME
     
     # writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', options={'strings_to_formulas': True})
     writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', engine_kwargs={'options': {'strings_to_formulas': True}})
@@ -597,7 +597,6 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
         
         gstr2a_work_1=gstr2a_work_1[mask_1]
 #         print(gstr2a_work_2)
-
 
         gstr2a_work=gstr2a_work_1     
         
@@ -1357,14 +1356,14 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
 
 
 
-    wb.save(fullpath2)
+    # wb.close(fullpath2)
     writer.close()
 
     wb.close()
     writer.close()
 
 
-    print(f'Matching has been done and saved in below path \n {fullpath2}\n{fullpath1} ')
+    print(f'Matching has been done and saved in below path \n {fullpath2}\n ')
 
     # return (writer)
     return {

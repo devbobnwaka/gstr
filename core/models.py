@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
+from .validators import ExcelFileValidator
 # Create your models here.
 
 
@@ -58,8 +59,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class FileUploader(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    file_1=models.FileField(upload_to='upload/')
-    file_2=models.FileField(upload_to='upload/')
+    file_1=models.FileField(upload_to='upload/', validators=[ExcelFileValidator()])
+    file_2=models.FileField(upload_to='upload/', validators=[ExcelFileValidator()])
 
     def __str__(self):
         return self.user.email

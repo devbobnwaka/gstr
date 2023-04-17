@@ -25,9 +25,6 @@ R2_UTGST="UTGST"
 EXPORT_SUMMARY_NAME="GSTR2 Vs PR Reconciliation_Summary.xlsx"
 EXPORT_SUMMARY_SHEET="Summary"
 
-EXPORT_WORKING_NAME="GSTR2 Vs PR Reconciliation_Working.xlsx"
-
-
 GSTR2A_SHEET_NAME="Main_2A_Format"
 ITR_SHEET_NAME="Main_ITR_Format"
 CHECKLIST_SHEET_NAME="Important_Checklist"
