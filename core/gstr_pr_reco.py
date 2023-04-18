@@ -267,7 +267,8 @@ def download(pth=os.getcwd()):
     fullpath1 = pth + "\\" + "Formats.xlsx"
     print(f"The path selected is {fullpath1}")
 
-    writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', options={'strings_to_formulas': True})
+    # writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', options={'strings_to_formulas': True}) #BOB COMMENTED THIS
+    writer = pd.ExcelWriter(fullpath1, engine='xlsxwriter', engine_kwargs={'options': {'strings_to_numbers': True}}) #BOB ADDED THIS
 
     dict1 = {PR_VENDOR_GSTREG_NO: ["Mandatory"], PR_VENDOR_NAME: ["Optional"], PR_INVOICE_NUMBER: ["Mandatory"],
              PR_INVOICE_DATE_TEXT: ["Mandatory"], PR_TOTAL_TAX: ["Mandatory"], PR_IGST: ["Optional"], PR_SGST: ["Optional"],
@@ -293,13 +294,17 @@ def download(pth=os.getcwd()):
     df3.to_excel(writer, sheet_name=CHECKLIST_SHEET_NAME, index=False)
 
 
-    writer.save()
+    # writer.save()   #BOB COMMENTED THIS
 
     writer.close()
 
     print(f'The Formats have been saved in below path \n {fullpath1}\n ')
 
-    return (writer)
+    # return (writer)
+    return {
+        "writer":writer,
+        "fullpath1":fullpath1
+    }
 
 
 def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
@@ -1369,7 +1374,8 @@ def reco_itr_2a(files_itr,files_con2a,tol_limit=100):
     # return (writer)
     return {
         "writer": writer,
-        "fullpath2": fullpath2
+        "working": fullpath1,
+        "summary": fullpath2,
     }
 
 

@@ -1,5 +1,6 @@
 import os
 from django.conf import settings
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -7,7 +8,7 @@ from django.http import HttpRequest, HttpResponse, FileResponse, Http404
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserCreationForm, UserAuthenticationForm, UploadFileForm
-from .gstr_pr_reco import reco_itr_2a
+from .gstr_pr_reco import reco_itr_2a, download
 
 # Create your views here.
 def home(request: HttpRequest) -> HttpResponse:
@@ -15,7 +16,7 @@ def home(request: HttpRequest) -> HttpResponse:
 
 
 @login_required()
-def index(request: HttpRequest, is_file_path_ready=None) -> HttpResponse:
+def index(request: HttpRequest, working_file_path=None, summary_file_path=None) -> HttpResponse:
     is_upload = False
     file_path_1=None
     file_path_2=None
@@ -45,7 +46,8 @@ def index(request: HttpRequest, is_file_path_ready=None) -> HttpResponse:
         else:
             messages.error(request, "Upload failed, File is not a valid file!!!")
     context = {"form": form,
-                "is_file_path_ready":is_file_path_ready,
+                "working_file_path":working_file_path,
+                "summary_file_path":summary_file_path,
                 "is_upload":is_upload,
                 "file_path_1":file_path_1,
                 "file_path_2":file_path_2
@@ -58,11 +60,12 @@ def reconcile(request, file_1, file_2):
     if file_1 and file_2:
         try:
             result = reco_itr_2a(file_1, file_2)
-            file_full_path = result.get('fullpath2')
-            is_file_path_ready = file_full_path
+            working_file_path = result.get('working')
+            summary_file_path = result.get('summary')
             messages.success(request, "Reconcile done!!!")
-            return redirect('core:index_with_path', is_file_path_ready=is_file_path_ready)
-        except:
+            return redirect('core:index_with_path', summary_file_path=summary_file_path)
+        except Exception as e:
+            print(e)
             messages.error(request, "Something went wrong while reconciling!!!")
             return redirect('core:index')
     messages.error(request, "File field is invalid!!!")
@@ -72,13 +75,20 @@ def reconcile(request, file_1, file_2):
 @login_required()
 def download_file(request, file_full_path):
     # file_full_path = os.path.join(settings.MEDIA_ROOT, file_path)
-    print(file_full_path)
     if os.path.exists(file_full_path):
         with open(file_full_path, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type='application/vnd.ms-excel')
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_full_path)
             return response
     raise Http404
+
+
+
+@login_required
+def download_sample_file(request):
+    res = download(settings.MEDIA_ROOT)
+    file_full_path = res.get('fullpath1')
+    return redirect('core:download_file', file_full_path=file_full_path)
 
 
 def register(request: HttpRequest) -> HttpResponse:

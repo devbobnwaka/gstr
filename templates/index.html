@@ -15,11 +15,20 @@
     {% if is_upload %}
     <a href="{% url 'core:reconcile' file_path_1 file_path_2 %}"><button>Reconcile</button></a>
     {% else %}
-    <button>Reconcile</button>
+    <button>Reconcile</button><br/>
     {% endif %}
 
-    {% if is_file_path_ready %}
-        <a href="{% url 'core:download_file' is_file_path_ready %}">Download FILE</a>
+    {% if summary_file_path %}
+        <a href="{% url 'core:download_file' summary_file_path %}">Download summary file</a><br/>
     {% endif %}
+
+    <br/>
+    <a href="{% url 'core:download_sample_file' %}"><button>Click this button to download sample files to test application</button></a><br/>
+    
+
+    {% comment %} {% if summary_file_path and working_file_path %}
+        <a href="{% url 'core:download_file' summary_file_path %}">Download summary file</a><br/>
+        <a href="{% url 'core:download_file' working_file_path %}">Download working file</a>
+    {% endif %} {% endcomment %}
 </main>
 {% endblock content %}
