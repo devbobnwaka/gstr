@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block content %}
+{% load static %}
+{% comment %} {% block content %}
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -7,4 +8,52 @@
     <button type="submit">Register</button>
 </form>
 
+{% endblock content %} {% endcomment %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock css %}
+
+{% block content %}
+<main>
+    <section class="item-1">
+        <div>
+            <h1>Basic GST Reconciliation and comparison tool.</h1>
+            <p>Using the tool, businesses can quickly identify and rectify any mismatches, reduce the chances of errors and penalties, and ensure compliance with the GST regulations.</p>
+        </div>
+    </section>
+    <section class="item-2">
+        <div class="payment mb-10">
+            <span>Try it free 7 days </span>then $20/mo. thereafter
+        </div>
+        <div>
+            {% if messages %}
+            <div class="mb-10 notification" >
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if form.errors %}
+            <div class="mb-10 red-notification" >
+                <div style="background-color:crisom; color:white;">
+                {{ form.errors }}
+                </div>
+            </div>
+            {% endif %}
+            <form action="" class="border-radius-10" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                {% comment %} <input class="mb-10" type="email" placeholder="Email" required>
+                <input class="mb-10" type="password" placeholder="Password" required>
+                <input class="mb-10" type="password" placeholder="Password confirmation" required> {% endcomment %}
+                <button type="submit" class="mb-10">REGISTER</button>
+                <p class="terms">New user, please click on <a href="{% url 'core:login' %}" style="color:blue;">login</a></p>
+                <p class="terms">By clicking the button you are agreeing to our <span>Terms and condition</span></p>
+            </form>
+        </div>
+    </section>
+</main>
+    
 {% endblock content %}

@@ -9,22 +9,23 @@ class UserAuthenticationForm(forms.ModelForm):
     """
       Form for Logging in  users
     """
-    password  = forms.CharField(label= 'Password', widget=forms.PasswordInput)
+    password  = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model  =  User
         fields =  ('email', 'password')
-        widgets = {
-                   'email':forms.TextInput(attrs={'class':'form-control'}),
-                   'password':forms.TextInput(attrs={'class':'form-control'}),
-        }
+
+
     def __init__(self, *args, **kwargs):
         """
           specifying styles to fields 
         """
         super(UserAuthenticationForm, self).__init__(*args, **kwargs)
+        self.fields['password'].widget.attrs.update({'placeholder':'Password'})
+        self.fields['email'].widget.attrs.update({'placeholder':'Email'})
         for field in (self.fields['email'],self.fields['password']):
-            field.widget.attrs.update({'class': 'form-control '})
+            field.widget.attrs.update({'class': 'mb-10'})
+            field.label=''
 
     def clean(self):
         if self.is_valid():
@@ -37,10 +38,24 @@ class UserAuthenticationForm(forms.ModelForm):
 
 
 class UserCreationForm(UserCreationForm):
-
+    password1  = forms.CharField(widget=forms.PasswordInput())
+    password2  = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
-        fields = ("email",)
+        fields = ("email","password1","password2")
+        # fields = ("email",)
+
+    def __init__(self, *args, **kwargs):
+        """
+          specifying styles to fields 
+        """
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['password2'].widget.attrs.update({'placeholder':'Password confirmation'})
+        self.fields['password1'].widget.attrs.update({'placeholder':'Password'})
+        self.fields['email'].widget.attrs.update({'placeholder':'Email'})
+        for field in (self.fields['email'],self.fields['password1'],self.fields['password2']):
+            field.widget.attrs.update({'class': 'mb-10'})
+            field.label=''
 
 
 class UserChangeForm(UserChangeForm):

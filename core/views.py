@@ -11,12 +11,18 @@ from .forms import UserCreationForm, UserAuthenticationForm, UploadFileForm
 from .gstr_pr_reco import reco_itr_2a, download
 
 # Create your views here.
-def home(request: HttpRequest) -> HttpResponse:
-    return render(request, 'home.html', {})
+def index(request: HttpRequest) -> HttpResponse:
+    if request.user.is_authenticated:
+        return redirect('core:gstr_home')
+    form = UserAuthenticationForm()
+    context={
+        "form":form
+    }
+    return render(request, 'index.html', context)
 
 
 @login_required()
-def index(request: HttpRequest, working_file_path=None, summary_file_path=None) -> HttpResponse:
+def gstr_home(request: HttpRequest, working_file_path=None, summary_file_path=None) -> HttpResponse:
     is_upload = False
     file_path_1=None
     file_path_2=None
@@ -25,6 +31,8 @@ def index(request: HttpRequest, working_file_path=None, summary_file_path=None) 
         form = UploadFileForm(request.POST, request.FILES)
         file_1 = request.FILES.get('file_1')
         file_2 = request.FILES.get('file_2')
+        print(file_1)
+        print(file_2)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
@@ -34,7 +42,7 @@ def index(request: HttpRequest, working_file_path=None, summary_file_path=None) 
             is_upload=True
             file_path_1=instance.file_1.path
             file_path_2=instance.file_2.path
-            messages.success(request, "File Uploaded")
+            messages.success(request, "File Uploaded ready to reconcile... Click reconcile to reconcile")
             # print('hello', type(instance.file_1.url))
             # print(os.path.join(settings.BASE_DIR, instance.file_1.name.replace("/", os.path.sep)))
             # print(instance.file_1.path)
@@ -52,7 +60,7 @@ def index(request: HttpRequest, working_file_path=None, summary_file_path=None) 
                 "file_path_1":file_path_1,
                 "file_path_2":file_path_2
                 }
-    return render(request, "index.html", context)
+    return render(request, "gstr_home.html", context)
 
 
 @login_required()
@@ -63,13 +71,13 @@ def reconcile(request, file_1, file_2):
             working_file_path = result.get('working')
             summary_file_path = result.get('summary')
             messages.success(request, "Reconcile done!!!")
-            return redirect('core:index_with_path', summary_file_path=summary_file_path)
+            return redirect('core:gstr_home_with_path', summary_file_path=summary_file_path)
         except Exception as e:
             print(e)
             messages.error(request, "Something went wrong while reconciling!!!")
-            return redirect('core:index')
+            return redirect('core:gstr_home')
     messages.error(request, "File field is invalid!!!")
-    return redirect('core:index')
+    return redirect('core:gstr_home')
 
 
 @login_required()
@@ -93,7 +101,7 @@ def download_sample_file(request):
 
 def register(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
-        return redirect('core:home')
+        return redirect('core:gstr_home')
     form = UserCreationForm()
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -101,7 +109,7 @@ def register(request: HttpRequest) -> HttpResponse:
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful." )
-            return redirect("core:home")
+            return redirect("core:gstr_home")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     context={
         "form":form
@@ -111,7 +119,7 @@ def register(request: HttpRequest) -> HttpResponse:
 
 def login_view(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
-        return redirect('core:home')
+        return redirect('core:gstr_home')
     if request.method == "POST":
         form = UserAuthenticationForm(request.POST)
         email   = request.POST.get('email')
@@ -120,19 +128,19 @@ def login_view(request: HttpRequest) -> HttpResponse:
         if user:
             login(request, user)
             messages.success(request, f"You are now logged in as {email}.")
-            return redirect("core:home")
+            return redirect("core:gstr_home")
         else:
             messages.error(request,"Invalid username or password.")
     form = UserAuthenticationForm()
     context={
         "form":form
     }
-    return render(request, 'accounts/login.html', context)
+    return render(request, 'index.html', context)
 
 
 @login_required
 def logout_view(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
-	return redirect("core:home")
+	return redirect("core:index")
 

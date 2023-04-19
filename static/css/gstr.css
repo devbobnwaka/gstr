@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background: hsl(0, 30%, 43%);
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    margin: auto auto;
+    height: 100vh;
+}
+
+main > section, main>nav, main>footer{
+    width: 80%;
+    margin: auto;
+}
+
+main>footer{
+    background-color: hsl(248, 32%, 49%);
+    color: white;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+li {
+    display: inline;
+    float: left;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: hsl(248, 32%, 49%);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+.flex-container {
+    display: flex;
+    
+  }
+
+.dodger-blue{
+    background-color: DodgerBlue;
+}
+.flex-container > div {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    font-size: 30px;
+    flex: 50%;
+    height: 100px;
+  }
+ 
+form{
+    background-color: white;
+    padding: 30px;
+    /* box-shadow: 0px 4px 0px  grey; */
+}
+
+button.sample{
+    margin: 20px;
+}
+
+button{
+    background-color: hsla(248, 32%, 49%, 0.486);
+}
+
+.flex-container > button, .flex-container > a {
+    border-radius: 5px;
+    display: block;
+    width: 50%;
+    padding: 10px;
+    margin: 10px 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.flex-container > a{
+    background-color: rgb(194, 183, 183);
+    text-decoration: none;
+}
+
+.a-button{
+    margin: 30px 30px 0px 30px;
+    width: 93%;
+    display: block;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+
+.sample{
+    background-color: rgba(220, 20, 60, 0.562);
+}
+
+.sample:hover{
+    background-color: crimson;
+}
+
+.flex-container >.reconcile{
+    background-color: rgba(220, 20, 60, 0.562);
+}
+
+.flex-container > .reconcile:hover{
+    background-color: crimson;
+}
+
+.summary{
+    background-color: rgba(86, 131, 86, .6);
+}
+
+.summary:hover{
+    background-color: rgb(86, 131, 86);
+}
+
+.text-center{
+    text-align: center;
+}
+
+button:hover{
+    background-color: hsla(248, 32%, 49%);
+    cursor: pointer;
+}
+
+/* .item {
+  } */
+  
+.item-center {
+    background-color: white;
+    flex-grow: 2;
+    height: 100vh;
+  }
+
+
+.notification{
+    background-color: rgba(255, 255, 0, 0.568);
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: indigo;
+    font-size: 1.2em;
+}

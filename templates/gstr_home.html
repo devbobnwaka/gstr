@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/gstr.css' %}">
+{% endblock css %}
+{% block content %}
+
+<main>  
+    <nav class="item">
+        <ul>
+            <li><a href="">GSTR</a></li>
+            <li><a href="{% url 'core:logout' %}">LOGOUT</a></li>
+        </ul>
+    </nav>
+    
+    <section class="item-center">
+        {% if messages %}
+            <div class="notification">
+                    {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+            </div>
+        {% endif %}
+        <div>
+            <a href="{% url 'core:download_sample_file' %}" class="a-button sample">Click this button to download sample files to test application</a>
+            <form action="" class="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="flex-container dodger-blue">
+                    <div>
+                        <div>
+                            <label for="GSTr2A">GSTr2A</label>
+                        </div>
+                        {% comment %} <input class="mb-10" type="file" id="GSTr2A" required> {% endcomment %}
+                        {{ form.file_1}}
+                    </div>
+                    <div>
+                        <div>
+                            <label for="ITR">ITR</label>
+                        </div>
+                        {% comment %} <input class="mb-10" type="file" id="ITR" required> {% endcomment %}
+                        {{ form.file_2}}
+                    </div>
+                </div>
+                <div class="flex-container">
+                    <button type="submit" class="mb-10">UPLOAD</button>
+                    {% if is_upload %}
+                    <a href="{% url 'core:reconcile' file_path_1 file_path_2 %}" class="text-center reconcile">RECONCILE</a>
+                    {% else %}
+                    <a class="text-center">RECONCILE</a>
+                    {% endif %}
+                </div>
+            </form>
+            {% if summary_file_path %}
+                <a href="{% url 'core:download_file' summary_file_path %}" class="a-button summary">Download summary file</a>
+            {% endif %}
+        </div>
+    </section>
+    <footer class="item"> 
+        &copy; 2023
+    </footer>
+</main>
+
+
+
+
+
+{% comment %} <a href="/logout">Logout</a> ||
+<a href="/">Home</a>
+
+
+<h1>INDEX PAGE</h1>
+<main>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Upload</button>
+    </form><br/>
+    {% if is_upload %}
+    <a href="{% url 'core:reconcile' file_path_1 file_path_2 %}"><button>Reconcile</button></a>
+    {% else %}
+    <button>Reconcile</button><br/>
+    {% endif %}
+
+    {% if summary_file_path %}
+        <a href="{% url 'core:download_file' summary_file_path %}">Download summary file</a><br/>
+    {% endif %}
+
+    <br/>
+    <a href="{% url 'core:download_sample_file' %}"><button>Click this button to download sample files to test application</button></a><br/>
+
+   {% if summary_file_path and working_file_path %}
+        <a href="{% url 'core:download_file' summary_file_path %}">Download summary file</a><br/>
+        <a href="{% url 'core:download_file' working_file_path %}">Download working file</a>
+    {% endif %} 
+</main> {% endcomment %}
+{% endblock content %} 

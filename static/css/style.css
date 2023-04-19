@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+body{
+    display: flex;
+    
+    justify-content: center;
+    height: 100vh;
+    background: hsl(0, 30%, 43%);
+}
+
+.mb-10{
+    margin-bottom: 20px;
+}
+
+.border-radius-10{
+    border-radius: 10px;
+}
+
+main{
+    display: flex;
+    width: 70%;
+    margin: auto;
+}
+
+main > section{
+    width: 50%;
+    margin: 20px;
+}
+
+input, button, .payment{
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+}
+
+input, button{
+    height: 45px;
+}
+
+input{
+    color: black;
+    padding: 0 0 0 20px;
+    border: 1px solid grey;
+}
+
+button{
+    background: hsl(154, 59%, 51%);
+    border:1px solid hsl(154, 56%, 41%);
+}
+
+button:hover{
+    background: hsla(154, 70%, 59%, 0.66);
+    cursor: pointer;
+}
+
+form{
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0px 4px 0px  grey;
+}
+
+.payment{
+    padding: 13px;
+    background-color: hsl(248, 32%, 49%);
+    text-align: center;
+    font-size: 13px;
+    box-shadow: 0px 4px 0px  grey;
+}
+
+.payment span{
+    font-weight: bold;
+}
+
+.terms{
+    color: grey;
+    font-size: 10px;
+    text-align: center;
+}
+
+.terms span{
+    color:hsl(0, 100%, 74%);
+    font-weight: bold;
+}
+
+.item-1{
+    display: flex;
+    align-items: center;
+}
+
+.item-1 p{
+    font-size: 15px;
+}
+
+h1{
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+@media (min-width:600px) and (max-width: 850px){
+    main{
+        width: 90%;
+    }
+
+    main > section{
+        width: 90%;
+        margin: 10px;
+    }
+}
+
+@media (min-width:375px) and (max-width: 600px){
+    body{
+        text-align: center;
+    }
+
+    main{
+        flex-direction: column;
+        width: 80%;
+    }
+
+    main > section{
+        width: 90%;
+        margin: 10px;
+    }
+}
+
+@media (max-width:375px){
+    body{
+        text-align: center;
+    }
+
+    main{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    main > section{
+        width: 100%;
+        margin: 10px;
+    }
+}
+
+
+.notification{
+    background-color: rgba(255, 255, 0, 0.568);
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: indigo;
+    padding: 13px;
+    font-size: 13px;
+}
+
+.red-notification{
+    background-color: rgba(255, 102, 0, 0.753);
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    padding: 13px;
+    font-size: 13px;
+}
